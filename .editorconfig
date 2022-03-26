@@ -15,5 +15,5 @@ trim_trailing_whitespace = false
 [*.json]
 indent_style = space
 
-[{Dockerfile,.editorconfig,.dockerignore,*.env,*.env.*,*.css}]
+[{Dockerfile,.editorconfig,.dockerignore,*.env,*.env.*,*.css,*.scss}]
 insert_final_newline = false
