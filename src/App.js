@@ -1,7 +1,9 @@
+import AppRouter from './routers/AppRouter';
+
 function App() {
 	return (
 		<>
-			<h1>Learn React</h1>
+			<AppRouter />
 		</>
 	);
 }
