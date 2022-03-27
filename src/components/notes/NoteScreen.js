@@ -14,7 +14,7 @@ export default function NoteScreen() {
 					/>
 					<textarea
 						placeholder="What happen today"
-						className="notes_textarea"
+						className="notes__textarea"
 					></textarea>
 					<div className="notes__image">
 						<img
