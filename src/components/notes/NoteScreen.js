@@ -8,8 +8,8 @@ export default function NoteScreen() {
 				<div className="notes__content">
 					<input
 						type="text"
-						placeholder="Some awesome tile"
-						className="notes__tilte-input"
+						placeholder="Some awesome title"
+						className="notes__title-input"
 						autoComplete="off"
 					/>
 					<textarea
