@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 import AuthRouter from './AuthRouter';
-import JournalScree from '../components/journal/JournalScree';
+import JournalScreen from '../components/journal/JournalScreen';
 
 export default function AppRouter() {
 	return (
@@ -14,7 +14,7 @@ export default function AppRouter() {
 			<div>
 				<Switch>
 					<Route path="/auth" component={AuthRouter} />
-					<Route exact path="/" component={JournalScree} />
+					<Route exact path="/" component={JournalScreen} />
 					<Redirect to="/auth/login" />
 				</Switch>
 			</div>
