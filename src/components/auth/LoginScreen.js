@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { login } from '../../actions/auth';
+import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth';
 import { useForm } from '../../hooks/useForm';
 
 export default function LoginScreen() {
@@ -14,7 +14,11 @@ export default function LoginScreen() {
 	const handleLogin = (e) => {
 		e.preventDefault();
 
-		dispatch(login(123456, 'Enrique'));
+		dispatch(startLoginEmailPassword(email, password));
+	};
+
+	const handleGoogleLogin = () => {
+		dispatch(startGoogleLogin());
 	};
 
 	return (
@@ -43,7 +47,7 @@ export default function LoginScreen() {
 				</button>
 				<div className="auth__social-network">
 					<p>Login with social network</p>
-					<div className="google-btn">
+					<div className="google-btn" onClick={handleGoogleLogin}>
 						<div className="google-icon-wrapper">
 							<img
 								className="google-icon"
