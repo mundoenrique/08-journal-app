@@ -7,7 +7,7 @@ import { useForm } from '../../hooks/useForm';
 export default function LoginScreen() {
 	const dispatch = useDispatch();
 	const [{ email, password }, handleInputValues] = useForm({
-		email: 'enrique@yahoo.com',
+		email: 'yayita@gmail.com',
 		password: '123456',
 	});
 
