@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
@@ -21,11 +22,8 @@ export const startLoginEmailPassword = (email, password) => {
 				dispatch(finishLoading());
 			})
 			.catch((error) => {
-				console.log(typeof error);
-				console.log(error);
-				console.log(error.code);
-				console.log(error.message);
 				dispatch(finishLoading());
+				Swal.fire('Wait!', error.message, 'error');
 			});
 	};
 };
@@ -40,10 +38,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name) => {
 				dispatch(login(user.uid, user.displayName));
 			})
 			.catch((error) => {
-				console.log(typeof error);
-				console.log(error);
-				console.log(error.code);
-				console.log(error.message);
+				Swal.fire('Wait!', error.message, 'error');
 			});
 	};
 };
@@ -56,7 +51,7 @@ export const startGoogleLogin = () => {
 				dispatch(login(user.uid, user.displayName));
 			})
 			.catch((error) => {
-				console.log(error);
+				Swal.fire('Wait!', error.message, 'error');
 			});
 	};
 };
