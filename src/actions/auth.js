@@ -1,6 +1,7 @@
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
+	signInWithEmailAndPassword,
 	signInWithPopup,
 	updateProfile,
 } from 'firebase/auth';
@@ -10,20 +11,28 @@ import { types } from '../types/types';
 
 export const startLoginEmailPassword = (email, password) => {
 	return (dispatch) => {
-		setTimeout(() => {
-			dispatch(login(123, 'Jesús'));
-		}, 3500);
+		const auth = getAuth();
+		signInWithEmailAndPassword(auth, email, password)
+			.then(({ user }) => {
+				console.log(user);
+				dispatch(login(user.uid, user.displayName));
+			})
+			.catch((error) => {
+				console.log(typeof error);
+				console.log(error);
+				console.log(error.code);
+				console.log(error.message);
+			});
 	};
 };
 
 export const startRegisterWithEmailPasswordName = (email, password, name) => {
 	return (dispatch) => {
 		const auth = getAuth();
-		createUserWithEmailAndPassword(auth, email, password);
 		createUserWithEmailAndPassword(auth, email, password)
 			.then(async ({ user }) => {
 				await updateProfile(user, { displayName: name });
-
+				console.log(user);
 				dispatch(login(user.uid, user.displayName));
 			})
 			.catch((error) => {
