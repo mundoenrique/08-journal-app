@@ -8,20 +8,24 @@ import {
 
 import { googleAuthProvider } from '../firebase/firebaseConfig';
 import { types } from '../types/types';
+import { finishLoading, startLoading } from './ui';
 
 export const startLoginEmailPassword = (email, password) => {
 	return (dispatch) => {
+		dispatch(startLoading());
 		const auth = getAuth();
 		signInWithEmailAndPassword(auth, email, password)
 			.then(({ user }) => {
 				console.log(user);
 				dispatch(login(user.uid, user.displayName));
+				dispatch(finishLoading());
 			})
 			.catch((error) => {
 				console.log(typeof error);
 				console.log(error);
 				console.log(error.code);
 				console.log(error.message);
+				dispatch(finishLoading());
 			});
 	};
 };
