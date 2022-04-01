@@ -12,7 +12,10 @@ export default function JournalEntry({ id, title, body, date, url }) {
 
 	return (
 		<>
-			<div className="journal__entry pointer" onClick={handleNoteActive}>
+			<div
+				className="journal__entry pointer  animate__animated animate__fadeIn animate__faster"
+				onClick={handleNoteActive}
+			>
 				{url && (
 					<div
 						className="journal__entry-picture"
