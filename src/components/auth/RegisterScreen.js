@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import validator from 'validator';
 
 import { useForm } from '../../hooks/useForm';
-import { removeError, SetError } from '../../actions/ui';
+import { removeError, setError } from '../../actions/ui';
 import { startRegisterWithEmailPasswordName } from '../../actions/auth';
 
 export default function RegisterScreen() {
@@ -29,13 +29,13 @@ export default function RegisterScreen() {
 		let valid = true;
 
 		if (name.trim().length === 0) {
-			dispatch(SetError('Name is required'));
+			dispatch(setError('Name is required'));
 			valid = false;
 		} else if (!validator.isEmail(email)) {
-			dispatch(SetError('Invalid email '));
+			dispatch(setError('Invalid email '));
 			valid = false;
 		} else if (password !== password2 || password.trim().length < 5) {
-			dispatch(SetError('Password should be at least 6 characters'));
+			dispatch(setError('Password should be at least 6 characters'));
 			valid = false;
 		}
 
