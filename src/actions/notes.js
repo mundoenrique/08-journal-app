@@ -1,14 +1,17 @@
+import Swal from 'sweetalert2';
 import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
+
 import { db } from '../firebase/firebaseConfig';
 import { types } from '../types/types';
+import { fileUpload } from '../helpers/fileUpload';
 
 export const startAddNewNote = () => {
 	return async (dispatch, getState) => {
 		const { uid } = getState().auth;
 
 		const newNote = {
-			title: 'mundoenrique',
-			body: 'Enrique Peñaloza',
+			title: '',
+			body: '',
 			date: new Date().getTime(),
 		};
 
@@ -64,5 +67,34 @@ export const startSaveNote = (note) => {
 		delete noteToFirestore.id;
 
 		await setDoc(doc(db, uid, 'journal', 'notes', note.id), noteToFirestore);
+
+		dispatch(refreshNote(note.id, noteToFirestore));
+		Swal.fire('Saved!', note.title, 'success');
+	};
+};
+
+export const refreshNote = (id, note) => ({
+	type: types.notesUpdated,
+	payload: { id, note: id, ...note },
+});
+
+export const startUploading = (file) => {
+	return async (dispatch, getState) => {
+		const { active: note } = getState().notes;
+
+		Swal.fire({
+			title: 'Uploading...',
+			html: 'Please wait...',
+			allowOutsideClick: false,
+			didOpen: () => {
+				Swal.showLoading();
+			},
+		});
+
+		const fileUrl = await fileUpload(file);
+
+		dispatch(startSaveNote({ ...note, url: fileUrl }));
+
+		Swal.close();
 	};
 };

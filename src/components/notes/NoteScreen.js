@@ -8,7 +8,7 @@ export default function NoteScreen() {
 	const dispatch = useDispatch();
 	const { active: note } = useSelector((state) => state.notes);
 	const [inputValues, handleInputValues, resetValues] = useForm(note);
-	const { title, body, url } = inputValues;
+	const { title, body } = inputValues;
 	const activeId = useRef(note.id);
 
 	useEffect(() => {
@@ -21,6 +21,10 @@ export default function NoteScreen() {
 	useEffect(() => {
 		dispatch(activeNote(inputValues.id, { ...inputValues }));
 	}, [dispatch, inputValues]);
+
+	const handleDelete = () => {
+		dispatch();
+	};
 
 	return (
 		<>
@@ -43,15 +47,15 @@ export default function NoteScreen() {
 						value={body}
 						onChange={handleInputValues}
 					></textarea>
-					{url && (
+					{note.url && (
 						<div className="notes__image">
-							<img
-								src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&w=1000&q=80"
-								alt="place"
-							/>
+							<img src={note.url} alt={title} />
 						</div>
 					)}
 				</div>
+				<button className="btn btn-danger" onClick={handleDelete}>
+					Delete
+				</button>
 			</div>
 		</>
 	);
