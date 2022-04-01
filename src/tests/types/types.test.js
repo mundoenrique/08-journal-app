@@ -1,4 +1,4 @@
-import { types } from '../../../types/types';
+import { types } from '../../types/types';
 
 describe('Pruebas en types.js', () => {
 	test('los types deben coincidir', () => {
@@ -17,6 +17,7 @@ describe('Pruebas en types.js', () => {
 			notesDelete: '[Notes] Delete note',
 			notesLogoutCleaning: '[Notes] Logout cleaning',
 		};
+
 		expect(types).toEqual(typesTest);
 	});
 });
