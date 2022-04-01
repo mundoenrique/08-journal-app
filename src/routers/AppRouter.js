@@ -8,6 +8,7 @@ import PrivateRouter from './PrivateRouter';
 import PublicRouter from './PublicRouter';
 import { login } from '../actions/auth';
 import JournalScreen from '../components/journal/JournalScreen';
+import { startLoadNotes } from '../actions/notes';
 
 export default function AppRouter() {
 	const dispatch = useDispatch();
@@ -20,6 +21,8 @@ export default function AppRouter() {
 			if (user) {
 				dispatch(login(user.uid, user.displayName));
 				setisLoggedIn(true);
+
+				dispatch(startLoadNotes());
 			} else {
 				setisLoggedIn(false);
 			}
@@ -29,7 +32,7 @@ export default function AppRouter() {
 	}, [dispatch, setChecking, setisLoggedIn]);
 
 	if (checking) {
-		return <h1>Espera por favor...</h1>;
+		return <h1>Wait a moment...</h1>;
 	}
 
 	return (
