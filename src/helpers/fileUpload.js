@@ -19,6 +19,6 @@ export const fileUpload = async (file) => {
 			throw await resp.json();
 		}
 	} catch (error) {
-		throw error;
+		return null;
 	}
 };
