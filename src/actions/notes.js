@@ -91,7 +91,7 @@ export const startSaveNote = (note) => {
 
 export const refreshNote = (id, note) => ({
 	type: types.notesUpdated,
-	payload: { id, note: id, ...note },
+	payload: { id, note: { id, ...note } },
 });
 
 export const startUploading = (file) => {
@@ -108,8 +108,9 @@ export const startUploading = (file) => {
 		});
 
 		const fileUrl = await fileUpload(file);
+		note.url = fileUrl;
 
-		dispatch(startSaveNote({ ...note, url: fileUrl }));
+		dispatch(startSaveNote(note));
 
 		Swal.close();
 	};

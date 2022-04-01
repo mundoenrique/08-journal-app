@@ -9,7 +9,7 @@ export default function NoteScreen() {
 	const dispatch = useDispatch();
 	const { active: note } = useSelector((state) => state.notes);
 	const [inputValues, handleInputValues, resetValues] = useForm(note);
-	const { title, body } = inputValues;
+	const { title, body, id } = inputValues;
 	const activeId = useRef(note.id);
 
 	useEffect(() => {
@@ -24,7 +24,7 @@ export default function NoteScreen() {
 	}, [dispatch, inputValues]);
 
 	const handleDelete = () => {
-		dispatch(startDeleteNote(inputValues.id));
+		dispatch(startDeleteNote(id));
 	};
 
 	return (
@@ -42,7 +42,7 @@ export default function NoteScreen() {
 						onChange={handleInputValues}
 					/>
 					<textarea
-						placeholder="What happen today"
+						placeholder="What happened today"
 						className="notes__textarea"
 						name="body"
 						value={body}
