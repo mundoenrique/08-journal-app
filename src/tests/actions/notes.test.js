@@ -1,11 +1,14 @@
 /**
  * @jest-environment node
  */
-
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc } from 'firebase/firestore';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { startAddNewNote, startLoadNotes } from '../../actions/notes';
+import {
+	startAddNewNote,
+	startLoadNotes,
+	startSaveNote,
+} from '../../actions/notes';
 import { db } from '../../firebase/firebaseConfig';
 import { types } from '../../types/types';
 
@@ -24,7 +27,7 @@ describe('Pruebas en action notes.js', () => {
 		store = mockStore(initState);
 	});
 
-	test('should crear una nueva nota startAddNewNote', async () => {
+	test('Debe crear una nueva nota startAddNewNote', async () => {
 		await store.dispatch(startAddNewNote());
 
 		const actions = store.getActions();
@@ -72,5 +75,23 @@ describe('Pruebas en action notes.js', () => {
 
 		expect(actions[0].payload.length).toBe(2);
 		expect(actions[0].payload[0]).toMatchObject(expected);
+	});
+
+	test('Debe actulizar la nota startSaveNote', async () => {
+		const note = {
+			id: 'PwZROm0ijXEZdtlCXhVL',
+			title: 'title',
+			body: 'body',
+			date: 1648856254565,
+		};
+
+		await store.dispatch(startSaveNote(note));
+
+		const actions = store.getActions();
+		const docRef = doc(db, 'TESTING', 'journal', 'notes', note.id);
+		const docSnap = await getDoc(docRef);
+
+		expect(actions[0].type).toBe(types.notesUpdated);
+		expect(docSnap.data().title).toBe(note.title);
 	});
 });
