@@ -12,7 +12,7 @@ describe('Pruebas en fileUpload.js', () => {
 		const url = await fileUpload(file);
 
 		expect(typeof url).toBe('string');
-	});
+	}, 10000);
 
 	test('Debe retornar un error', async () => {
 		const file = new File([], 'foto2.png');
