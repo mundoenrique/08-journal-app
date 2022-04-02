@@ -51,18 +51,24 @@ export const addNewNote = (id, note) => ({
 export const startLoadNotes = () => {
 	return async (dispatch, getState) => {
 		const { uid } = getState().auth;
-
 		const notes = [];
-		const querySnapshot = await getDocs(collection(db, `${uid}/journal/notes`));
 
-		querySnapshot.forEach((doc) => {
-			notes.push({
-				id: doc.id,
-				...doc.data(),
+		try {
+			const querySnapshot = await getDocs(
+				collection(db, uid, 'journal', 'notes')
+			);
+
+			querySnapshot.forEach((doc) => {
+				notes.push({
+					id: doc.id,
+					...doc.data(),
+				});
 			});
-		});
 
-		dispatch(setNotes(notes));
+			dispatch(setNotes(notes));
+		} catch (error) {
+			return error;
+		}
 	};
 };
 
