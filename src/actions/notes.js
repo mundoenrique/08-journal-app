@@ -23,7 +23,7 @@ export const startAddNewNote = () => {
 		};
 
 		const docRef = await addDoc(
-			collection(db, `${uid}/journal/notes`),
+			collection(db, uid, 'journal', 'notes'),
 			newNote
 		);
 
