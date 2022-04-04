@@ -8,15 +8,31 @@ import {
 	startAddNewNote,
 	startLoadNotes,
 	startSaveNote,
+	startUploading,
 } from '../../actions/notes';
 import { db } from '../../firebase/firebaseConfig';
 import { types } from '../../types/types';
+
+jest.mock('../../helpers/fileUpload', () => ({
+	fileUpload: () => Promise.resolve('https://image.jpg'),
+}));
+
+global.scrollTo = jest.fn();
+global.File = jest.fn();
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 const initState = {
 	auth: {
 		uid: 'TESTING',
+	},
+	notes: {
+		active: {
+			id: '3wgVMxZYFYNfbmdeinh4',
+			title: 'Hola',
+			body: 'Mundo',
+			date: 1648856254869,
+		},
 	},
 };
 
@@ -93,5 +109,17 @@ describe('Pruebas en action notes.js', () => {
 
 		expect(actions[0].type).toBe(types.notesUpdated);
 		expect(docSnap.data().title).toBe(note.title);
+	});
+
+	test('Debe actualizar el url de la note startUploading', async () => {
+		const { id } = initState.notes.active;
+		const file = new File([], 'chucknorris.png');
+
+		await store.dispatch(startUploading(file));
+
+		const docRef = doc(db, 'TESTING', 'journal', 'notes', id);
+		const docSnap = await getDoc(docRef);
+
+		expect(docSnap.data().url).toBe('https://image.jpg');
 	});
 });
