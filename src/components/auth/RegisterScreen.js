@@ -32,7 +32,7 @@ export default function RegisterScreen() {
 			dispatch(setError('Name is required'));
 			valid = false;
 		} else if (!validator.isEmail(email)) {
-			dispatch(setError('Invalid email '));
+			dispatch(setError('Invalid email'));
 			valid = false;
 		} else if (password !== password2 || password.trim().length < 5) {
 			dispatch(setError('Password should be at least 6 characters'));
